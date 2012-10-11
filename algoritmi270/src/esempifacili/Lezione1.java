@@ -20,13 +20,20 @@ public class Lezione1 {
 		return n* fatt(n-1);
 	}
 	
+	public static int fibRic(int n){
+		if(n<1) return 1;
+		return fibRic(n-1)+fibRic(n-2);
+	}
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		int[] v = {0,1,2,7,4,5};
-		System.out.println(presente(v,3));
-
+		int x = fatt(6);
+		System.out.println(x);
+		int y = fibRic(7);
+		System.out.println(y);
 	}
 
 }
