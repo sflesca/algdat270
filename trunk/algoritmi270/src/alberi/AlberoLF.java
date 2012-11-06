@@ -3,7 +3,7 @@
  */
 package alberi;
 
-import java.util.Iterator;
+import java.util.*;
 
 import alberi.ecccezioni.AlberiDiversiException;
 
@@ -164,6 +164,46 @@ public class AlberoLF implements Albero {
 					break;
 				}
 		}
+	}
+
+
+	@Override
+	public List visitaAnticipata() {
+		List l = new LinkedList();
+		visitaAnticipata(l);
+		return l;
+	}
+	
+	private void visitaAnticipata(List l){
+		Iterator<Albero> it = figli();
+		while(it.hasNext()){
+			((AlberoLF) it.next()).visitaAnticipata(l);
+		}
+		l.add(val());
+	}
+
+
+
+	@Override
+	public List visitaPosticipata() {
+		List l = new LinkedList();
+		visitaPosticipata(l);
+		return l;
+	}
+
+	private void visitaPosticipata(List l){
+		Iterator<Albero> it = figli();
+		l.add(val());
+		while(it.hasNext()){
+			((AlberoLF) it.next()).visitaAnticipata(l);
+		}
+
+	}
+
+	@Override
+	public List visitaLivelli() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
