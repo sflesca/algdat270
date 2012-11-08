@@ -202,8 +202,17 @@ public class AlberoLF implements Albero {
 
 	@Override
 	public List visitaLivelli() {
-		// TODO Auto-generated method stub
-		return null;
+		List ris = new LinkedList();
+		Queue<Albero> daVisitare = new LinkedList<Albero>();
+		daVisitare.offer(this);
+		while(!daVisitare.isEmpty()){
+			Albero curr = daVisitare.poll();
+			ris.add(curr.val());
+			Iterator<Albero> itFigli = curr.figli();
+			while(itFigli.hasNext())
+				daVisitare.offer(itFigli.next());
+		}
+		return ris;
 	}
 
 }
