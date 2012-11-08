@@ -56,7 +56,7 @@ public class Tester {
 	private static boolean simmetrici(AlberoBin sin, AlberoBin des) {
 		if((sin==null)&&(des==null)) return true;
 		if((sin==null)||(des==null)) return false;
-		return (sin.val().equals(des.val())&&
+		return (sin.val().equals(des.val()))&&
 				simmetrici(sin.sin(),des.des())&&
 				simmetrici(sin.des(),des.sin());
 	}
