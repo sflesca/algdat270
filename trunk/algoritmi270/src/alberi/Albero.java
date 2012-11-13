@@ -10,24 +10,24 @@ import java.util.List;
  * @author sflesca
  *
  */
-public interface Albero {
+public interface Albero<T> {
 	
-	public Object val();
+	public T val();
 	
-	public Albero padre();
+	public Albero<T> padre();
 	
-	public Albero figlio(int pos);
+	public Albero<T> figlio(int pos);
 	
-	public Iterator<Albero> figli();
+	public Iterator<Albero<T>> figli();
 	
 	public int grado();
 	
 	public int gradoMax();
 	
-	public List visitaAnticipata();
+	public List<T> visitaAnticipata();
 	
-	public List visitaPosticipata();
+	public List<T> visitaPosticipata();
 	
-	public List visitaLivelli();
+	public List<T> visitaLivelli();
 
 }
