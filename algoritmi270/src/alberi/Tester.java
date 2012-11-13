@@ -13,7 +13,7 @@ public class Tester {
 	 * 
 	 */
 	
-	public static boolean verificaSomma(AlberoBin a){
+	public static boolean verificaSomma(AlberoBin<Integer> a){
 		if(a==null) return true;
 		if((a.sin()==null)&&(a.des()==null)) return true;
 //		return (((Integer) a.val()).intValue()==somma(a.sin())
@@ -35,7 +35,7 @@ public class Tester {
 	 * 
 	 */
 	
-	public static int somma(AlberoBin a){
+	public static int somma(AlberoBin<Integer> a){
 		if(a==null) return 0;
 		return ((Integer) a.val()).intValue()+somma(a.sin())
 				+somma(a.des());
@@ -48,12 +48,12 @@ public class Tester {
 	 * 
 	 */
 	
-	public static boolean simmetrico(AlberoBin a){
+	public static boolean simmetrico(AlberoBin<Integer> a){
 		if(a==null) return true;
 		return simmetrici(a.sin(),a.des());
 	}
 	
-	private static boolean simmetrici(AlberoBin sin, AlberoBin des) {
+	private static boolean simmetrici(AlberoBin<Integer> sin, AlberoBin<Integer> des) {
 		if((sin==null)&&(des==null)) return true;
 		if((sin==null)||(des==null)) return false;
 		return (sin.val().equals(des.val()))&&
@@ -69,7 +69,7 @@ public class Tester {
 	 * 
 	 */
 	
-	public static boolean verificaFoglie(AlberoBin a){
+	public static boolean verificaFoglie(AlberoBin<Integer> a){
 		if (a==null)
 			return true;
 		if((a.sin()==null)&&(a.des()==null))
@@ -87,7 +87,7 @@ public class Tester {
 	 * 
 	 */
 	
-	public static boolean verifica(AlberoBin a, int l){
+	public static boolean verifica(AlberoBin<Integer> a, int l){
 		if(a==null) return true;
 		if (l<=0)
 			return (((Integer) a.val()).intValue()>=0)&&
@@ -102,17 +102,17 @@ public class Tester {
 	 */
 	public static void main(String[] args) {
 		
-		AlberoBinLF a =  new AlberoBinLF();
+		AlberoBinLF<Integer> a =  new AlberoBinLF<Integer>();
 		a.setVal(new Integer(-1));
-		AlberoBinLF a1 =  new AlberoBinLF();
+		AlberoBinLF<Integer> a1 =  new AlberoBinLF<Integer>();
 		a.setVal(new Integer(1));
-		AlberoBinLF a2 =  new AlberoBinLF();
+		AlberoBinLF<Integer> a2 =  new AlberoBinLF<Integer>();
 		a.setVal(new Integer(0));
-		AlberoBinLF a3 =  new AlberoBinLF();
+		AlberoBinLF<Integer> a3 =  new AlberoBinLF<Integer>();
 		a.setVal(new Integer(2));
-		AlberoBinLF a4 =  new AlberoBinLF();
+		AlberoBinLF<Integer> a4 =  new AlberoBinLF<Integer>();
 		a.setVal(new Integer(-33));
-		AlberoBinLF a5 =  new AlberoBinLF();
+		AlberoBinLF<Integer> a5 =  new AlberoBinLF<Integer>();
 		a.setVal(new Integer(4));
 		
 		a.setSin(a1);
