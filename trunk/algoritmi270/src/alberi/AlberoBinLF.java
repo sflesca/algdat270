@@ -36,7 +36,7 @@ public class AlberoBinLF<T> extends AlberoLF<T> implements AlberoBin<T>{
 	@Override
 	public AlberoBin<T> des() {
 		// TODO Auto-generated method stub
-		return (AlberoBin) figlio(1);
+		return (AlberoBin<T>) figlio(1);
 	}
 
 	public void setDes(AlberoBinLF<T> a){
