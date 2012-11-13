@@ -11,20 +11,20 @@ import alberi.ecccezioni.AlberiDiversiException;
  * @author sflesca
  *
  */
-public class AlberoLF implements Albero {
+public class AlberoLF<T> implements Albero<T> {
 
 	protected int numMaxFigli;
-	protected AlberoLF[] figli;
-	protected AlberoLF padre = null;
+	protected ArrayList<AlberoLF<T>> figli;
+	protected AlberoLF<T> padre = null;
 	protected int posFiglio = -1;
-	protected Object val = null;
+	protected T val = null;
 	
 	/**
 	 * 
 	 */
 	public AlberoLF(int numMaxFigli) {
 		this.numMaxFigli = numMaxFigli;
-		figli = new AlberoLF[numMaxFigli];
+		figli = new ArrayList<AlberoLF<T>>(numMaxFigli);
 	}
 
 	
@@ -33,9 +33,9 @@ public class AlberoLF implements Albero {
 	 * @param numMaxFigli
 	 * @param val
 	 */
-	public AlberoLF(int numMaxFigli, Object val) {
+	public AlberoLF(int numMaxFigli, T val) {
 		this.numMaxFigli = numMaxFigli;
-		figli = new AlberoLF[numMaxFigli];
+		figli = new ArrayList<AlberoLF<T>>(numMaxFigli);
 		this.val = val;
 	}
 
@@ -45,12 +45,12 @@ public class AlberoLF implements Albero {
 	 * @see alberi.Albero#val()
 	 */
 	@Override
-	public Object val() {
+	public T val() {
 		// TODO Auto-generated method stub
 		return val;
 	}
 	
-	public void setVal(Object val) {
+	public void setVal(T val) {
 		this.val = val;
 	}
 
@@ -58,7 +58,7 @@ public class AlberoLF implements Albero {
 	 * @see alberi.Albero#padre()
 	 */
 	@Override
-	public Albero padre() {
+	public Albero<T> padre() {
 		// TODO Auto-generated method stub
 		return padre;
 	}
@@ -67,20 +67,20 @@ public class AlberoLF implements Albero {
 	 * @see alberi.Albero#figlio(int)
 	 */
 	@Override
-	public Albero figlio(int pos) {
+	public Albero<T> figlio(int pos) {
 		if ((pos>= numMaxFigli)|| (pos<0))
 			throw new ArrayIndexOutOfBoundsException();
-		return figli[pos];
+		return figli.get(pos);
 	}
 
 	/* (non-Javadoc)
 	 * @see alberi.Albero#figli()
 	 */
 	@Override
-	public Iterator<Albero> figli() {
+	public Iterator<Albero<T>> figli() {
 
 
-		return new IteratorFigli();
+		return new IteratorFigli(figli.iterator());
 	}
 
 	/* (non-Javadoc)
@@ -88,10 +88,7 @@ public class AlberoLF implements Albero {
 	 */
 	@Override
 	public int grado() {
-		int grado = 0;
-		for(int i=0;i<figli.length; i++)
-			if(figli[i]!=null) grado++;
-		return grado;
+		return figli.size();
 	}
 
 	/* (non-Javadoc)
@@ -104,7 +101,7 @@ public class AlberoLF implements Albero {
 	}
 	
 	
-	public boolean setFiglio(AlberoLF a, int pos) throws AlberiDiversiException{
+	public boolean setFiglio(AlberoLF<T> a, int pos) throws AlberiDiversiException{
 		if ((pos>= numMaxFigli)|| (pos<0))
 			throw new ArrayIndexOutOfBoundsException();
 		if (a==null) return true;
@@ -112,42 +109,38 @@ public class AlberoLF implements Albero {
 			throw new AlberiDiversiException();
 		if (figlio(pos)!=null)
 			return false;
-		figli[pos] = a;
-		AlberoLF aa = (AlberoLF) a;
-		aa.padre = this;
-		aa.posFiglio = pos;
+		figli.set(pos, a);
+		a.padre = this;
+		a.posFiglio = pos;
 		return true;
 	}
 	
 	public void pota(){
 		if (padre!=null){
-			padre.figli[posFiglio]=null;
+			padre.figli.remove(posFiglio);
 			padre=null;
 			posFiglio=-1;
 		}
 	}
 	
 	
-	protected class IteratorFigli implements Iterator{
+	protected class IteratorFigli implements Iterator<Albero<T>>{
 		
-		protected int curr = -1;
-		protected boolean hasNext = false;
+		protected Iterator<AlberoLF<T>> it; 
 		
-		public IteratorFigli(){
-			succ();
+		public IteratorFigli(Iterator<AlberoLF<T>> it){
+			this.it = it;
 		}
 
 		@Override
 		public boolean hasNext() {
 			// TODO Auto-generated method stub
-			return hasNext;
+			return it.hasNext();
 		}
 
 		@Override
-		public Object next() {
-			if (!hasNext()) return null;
-			Object tmp = figli[curr];
-			succ();
+		public Albero<T> next() {
+			AlberoLF<T> tmp = it.next();
 			return tmp;
 		}
 
@@ -157,27 +150,20 @@ public class AlberoLF implements Albero {
 			
 		}
 		
-		private void succ(){
-			for(curr++; curr<figli.length;curr++)
-				if(figli[curr]!=null){
-					hasNext=true;
-					break;
-				}
-		}
 	}
 
 
 	@Override
-	public List visitaAnticipata() {
-		List l = new LinkedList();
+	public List<T> visitaAnticipata() {
+		List<T> l = new LinkedList<T>();
 		visitaAnticipata(l);
 		return l;
 	}
 	
-	private void visitaAnticipata(List l){
-		Iterator<Albero> it = figli();
+	private void visitaAnticipata(List<T> l){
+		Iterator<Albero<T>> it = figli();
 		while(it.hasNext()){
-			((AlberoLF) it.next()).visitaAnticipata(l);
+			((AlberoLF<T>) it.next()).visitaAnticipata(l);
 		}
 		l.add(val());
 	}
@@ -185,30 +171,30 @@ public class AlberoLF implements Albero {
 
 
 	@Override
-	public List visitaPosticipata() {
-		List l = new LinkedList();
+	public List<T> visitaPosticipata() {
+		List<T> l = new LinkedList<T>();
 		visitaPosticipata(l);
 		return l;
 	}
 
-	private void visitaPosticipata(List l){
-		Iterator<Albero> it = figli();
+	private void visitaPosticipata(List<T> l){
+		Iterator<Albero<T>> it = figli();
 		l.add(val());
 		while(it.hasNext()){
-			((AlberoLF) it.next()).visitaAnticipata(l);
+			((AlberoLF<T>) it.next()).visitaAnticipata(l);
 		}
 
 	}
 
 	@Override
-	public List visitaLivelli() {
-		List ris = new LinkedList();
-		Queue<Albero> daVisitare = new LinkedList<Albero>();
+	public List<T> visitaLivelli() {
+		List<T> ris = new LinkedList<T>();
+		Queue<Albero<T>> daVisitare = new LinkedList<Albero<T>>();
 		daVisitare.offer(this);
 		while(!daVisitare.isEmpty()){
-			Albero curr = daVisitare.poll();
+			Albero<T> curr = daVisitare.poll();
 			ris.add(curr.val());
-			Iterator<Albero> itFigli = curr.figli();
+			Iterator<Albero<T>> itFigli = curr.figli();
 			while(itFigli.hasNext())
 				daVisitare.offer(itFigli.next());
 		}

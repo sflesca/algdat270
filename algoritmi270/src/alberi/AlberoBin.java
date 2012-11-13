@@ -9,16 +9,16 @@ import java.util.*;
  * @author sflesca
  *
  */
-public interface AlberoBin extends Albero{
+public interface AlberoBin<T> extends Albero<T>{
 	
-	public AlberoBin padreBin();
+	public AlberoBin<T> padreBin();
 	
-	public AlberoBin sin();
+	public AlberoBin<T> sin();
 	
-	public AlberoBin des();
+	public AlberoBin<T> des();
 	
-	public List visitaInfissa();
+	public List<T> visitaInfissa();
 	
-	public Iterator iteratorVI();
+	public Iterator<T> iteratorVI();
 
 }

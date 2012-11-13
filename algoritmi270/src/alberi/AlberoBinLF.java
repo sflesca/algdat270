@@ -13,32 +13,33 @@ import alberi.ecccezioni.AlberiDiversiException;
  * @author sflesca
  *
  */
-public class AlberoBinLF extends AlberoLF implements AlberoBin{
+public class AlberoBinLF<T> extends AlberoLF<T> implements AlberoBin<T>{
 
 	public AlberoBinLF() {
 		super(2);
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public AlberoBin padreBin() {
+	public AlberoBin<T> padreBin() {
 		// TODO Auto-generated method stub
-		return (AlberoBin) padre;
+		return (AlberoBin<T>) padre;
 	}
 
 	@Override
-	public AlberoBin sin() {
+	public AlberoBin<T> sin() {
 		// TODO Auto-generated method stub
-		return (AlberoBin) figli[0];
+		return (AlberoBin<T>) figlio(0);
 	}
 
 	@Override
-	public AlberoBin des() {
+	public AlberoBin<T> des() {
 		// TODO Auto-generated method stub
-		return (AlberoBin) figli[1];
+		return (AlberoBin) figlio(1);
 	}
 
-	public void setDes(AlberoBinLF a){
+	public void setDes(AlberoBinLF<T> a){
 		try {
 			setFiglio(a,1);
 		} catch (AlberiDiversiException e) {
@@ -47,7 +48,7 @@ public class AlberoBinLF extends AlberoLF implements AlberoBin{
 		}
 	}
 	
-	public void setSin(AlberoBinLF a){
+	public void setSin(AlberoBinLF<T> a){
 		try {
 			setFiglio(a,0);
 		} catch (AlberiDiversiException e) {
@@ -57,38 +58,38 @@ public class AlberoBinLF extends AlberoLF implements AlberoBin{
 	}
 
 	@Override
-	public List visitaInfissa() {
-		List l = new LinkedList();
+	public List<T> visitaInfissa() {
+		List<T> l = new LinkedList<T>();
 		visitaInfissa(l);
 		return l;
 	}
 	
-	private void visitaInfissa(List l){
-		AlberoBinLF s = (AlberoBinLF) sin();
+	private void visitaInfissa(List<T> l){
+		AlberoBinLF<T> s = (AlberoBinLF<T>) sin();
 		if (s!=null) s.visitaInfissa(l);
 		l.add(val());
-		AlberoBinLF d = (AlberoBinLF) des();
+		AlberoBinLF<T> d = (AlberoBinLF<T>) des();
 		if (s!=null) d.visitaInfissa(l);
 
 	}
 
 	@Override
-	public Iterator iteratorVI() {
+	public Iterator<T> iteratorVI() {
 		
 		return new IteratorVI(this);
 	}
 	
-	protected class IteratorVI implements Iterator{
+	protected class IteratorVI implements Iterator<T>{
 		
 		protected static final int SIN = 0;
 		protected static final int DES = 1;
 		protected static final int SU = 2;
 		protected static final int STOP = 3;
 		
-		protected AlberoBin curr;
+		protected AlberoBin<T> curr;
 		protected boolean hasNext;
 		
-		public IteratorVI(AlberoBin a){
+		public IteratorVI(AlberoBin<T> a){
 			curr=a;
 			hasNext=true;
 		}
@@ -120,12 +121,12 @@ public class AlberoBinLF extends AlberoLF implements AlberoBin{
 						hasNext=false;
 						dir=STOP;
 					}else{
-						if(((AlberoBin) curr.padre()).sin() ==curr){
-							curr=(AlberoBin) curr.padre();
+						if(((AlberoBin<T>) curr.padre()).sin() ==curr){
+							curr=(AlberoBin<T>) curr.padre();
 							hasNext=true;
 							dir=STOP;
 						}else{
-							curr=(AlberoBin) curr.padre();
+							curr=(AlberoBin<T>) curr.padre();
 							dir = SU;
 						}
 					}
@@ -142,9 +143,9 @@ public class AlberoBinLF extends AlberoLF implements AlberoBin{
 		}
 
 		@Override
-		public Object next() {
+		public T next() {
 			if(!hasNext()) return null;
-			Object tmp = curr.val();
+			T tmp = curr.val();
 			succ();
 			return tmp;
 		}
