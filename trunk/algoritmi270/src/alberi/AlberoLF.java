@@ -14,7 +14,7 @@ import alberi.ecccezioni.AlberiDiversiException;
 public class AlberoLF<T> implements Albero<T> {
 
 	protected int numMaxFigli;
-	protected ArrayList<AlberoLF<T>> figli;
+	protected Vettore<AlberoLF<T>> figli;
 	protected AlberoLF<T> padre = null;
 	protected int posFiglio = -1;
 	protected T val = null;
@@ -24,7 +24,7 @@ public class AlberoLF<T> implements Albero<T> {
 	 */
 	public AlberoLF(int numMaxFigli) {
 		this.numMaxFigli = numMaxFigli;
-		figli = new ArrayList<AlberoLF<T>>(numMaxFigli);
+		figli = new Vettore<AlberoLF<T>>(numMaxFigli);
 	}
 
 	
@@ -35,7 +35,7 @@ public class AlberoLF<T> implements Albero<T> {
 	 */
 	public AlberoLF(int numMaxFigli, T val) {
 		this.numMaxFigli = numMaxFigli;
-		figli = new ArrayList<AlberoLF<T>>(numMaxFigli);
+		figli = new Vettore<AlberoLF<T>>(numMaxFigli);
 		this.val = val;
 	}
 
