@@ -102,28 +102,37 @@ public class Tester {
 	 */
 	public static void main(String[] args) {
 		
-		AlberoBinLF<Integer> a =  new AlberoBinLF<Integer>();
-		a.setVal(new Integer(-1));
-		AlberoBinLF<Integer> a1 =  new AlberoBinLF<Integer>();
-		a.setVal(new Integer(1));
-		AlberoBinLF<Integer> a2 =  new AlberoBinLF<Integer>();
-		a.setVal(new Integer(0));
-		AlberoBinLF<Integer> a3 =  new AlberoBinLF<Integer>();
-		a.setVal(new Integer(2));
-		AlberoBinLF<Integer> a4 =  new AlberoBinLF<Integer>();
-		a.setVal(new Integer(-33));
-		AlberoBinLF<Integer> a5 =  new AlberoBinLF<Integer>();
-		a.setVal(new Integer(4));
+//		AlberoBinLF<Integer> a =  new AlberoBinLF<Integer>();
+//		a.setVal(new Integer(-1));
+//		AlberoBinLF<Integer> a1 =  new AlberoBinLF<Integer>();
+//		a.setVal(new Integer(1));
+//		AlberoBinLF<Integer> a2 =  new AlberoBinLF<Integer>();
+//		a.setVal(new Integer(0));
+//		AlberoBinLF<Integer> a3 =  new AlberoBinLF<Integer>();
+//		a.setVal(new Integer(2));
+//		AlberoBinLF<Integer> a4 =  new AlberoBinLF<Integer>();
+//		a.setVal(new Integer(-33));
+//		AlberoBinLF<Integer> a5 =  new AlberoBinLF<Integer>();
+//		a.setVal(new Integer(4));
+//		
+//		a.setSin(a1);
+//		a.setDes(a2);
+//		a1.setSin(a3);
+//		a3.setSin(a4);
+//		a4.setDes(a5);
+//		
+//		System.out.println(verifica(a,2));
 		
-		a.setSin(a1);
-		a.setDes(a2);
-		a1.setSin(a3);
-		a3.setSin(a4);
-		a4.setDes(a5);
+		ABR<Integer> a = new ABR<Integer>();
+		a.inserisci(10);
+		a.inserisci(18);
+		a.inserisci(10);
+		a.inserisci(19);
+		a.inserisci(6);
+		a.inserisci(13);
 		
-		System.out.println(verifica(a,2));
+		System.out.println(a.toString());
 		
-
 	}
 
 }
