@@ -125,7 +125,9 @@ public class Tester {
 		
 		ABR<Integer> a = new ABR<Integer>();
 		a.inserisci(10);
+		System.out.println(a.toString());
 		a.inserisci(18);
+		System.out.println(a.toString());
 		a.inserisci(10);
 		a.inserisci(19);
 		a.inserisci(6);

@@ -3,21 +3,21 @@ package alberi;
 import java.util.Iterator;
 
 public class Vettore<T> {
-	
+
 	Object[] items;
 
 	public Vettore(int sizeMax) {
-		items =  new Object[sizeMax];
+		items = new Object[sizeMax];
 	}
 
 	public void remove(int pos) {
-		items[pos]= null;
-		
+		items[pos] = null;
+
 	}
-	
+
 	public void set(int pos, T t) {
-		items[pos]=t;
-		
+		items[pos] = t;
+
 	}
 
 	public T get(int pos) {
@@ -25,8 +25,8 @@ public class Vettore<T> {
 	}
 
 	public Iterator<T> iterator() {
-		
-		return null;
+
+		return new IteratorNonNulli();
 	}
 
 	public int size() {
@@ -34,6 +34,38 @@ public class Vettore<T> {
 		return 0;
 	}
 
+	private class IteratorNonNulli implements Iterator<T> {
 
+		protected boolean hasNext;
+		protected int pos = -1;
+
+		public IteratorNonNulli() {
+			succ();
+		}
+
+		public T next() {
+			return null;
+		}
+
+		public boolean hasNext() {
+			return hasNext;
+		}
+
+		public void remove() {
+
+		}
+
+		private void succ() {
+			hasNext = false;
+			pos++;
+			while (pos < items.length) {
+				if (items[pos] != null) {
+					hasNext = true;
+					return;
+				}
+				pos++;
+			}
+		}
+	}
 
 }
