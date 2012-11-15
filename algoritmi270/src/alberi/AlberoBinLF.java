@@ -17,8 +17,15 @@ public class AlberoBinLF<T> extends AlberoLF<T> implements AlberoBin<T>{
 
 	public AlberoBinLF() {
 		super(2);
-		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public AlberoBinLF(T val) {
+		super(2, val);
+	}
+
+
 
 	@SuppressWarnings("unchecked")
 	@Override

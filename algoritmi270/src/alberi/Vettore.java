@@ -44,7 +44,10 @@ public class Vettore<T> {
 		}
 
 		public T next() {
-			return null;
+			if(!hasNext()) return null;
+			Object tmp = items[pos];
+			succ();
+			return (T) tmp;
 		}
 
 		public boolean hasNext() {
