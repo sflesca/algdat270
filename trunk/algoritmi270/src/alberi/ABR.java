@@ -82,8 +82,11 @@ public class ABR<T extends Comparable> implements Dizionario<T> {
 	
 	@Override
 	public String toString(){
-		List<T> valori = coll.visitaInfissa();
-		return valori.toString();
+		List<T> valoriInf = coll.visitaInfissa();
+		List<T> valoriAnt = coll.visitaAnticipata();
+		List<T> valoriPos = coll.visitaPosticipata();
+		List<T> valoriLiv = coll.visitaLivelli();
+		return "inf="+valoriInf.toString()+" ant="+valoriAnt.toString()+" pos="+valoriPos.toString()+" liv="+valoriLiv.toString();
 		
 	}
 }
