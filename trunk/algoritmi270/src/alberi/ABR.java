@@ -72,8 +72,8 @@ public class ABR<T extends Comparable> implements Dizionario<T> {
 				if(curr.des()==null) return curr;
 				curr=curr.des();
 			}else{
-				if(curr.des()==null) return curr;
-				curr=curr.des();
+				if(curr.sin()==null) return curr;
+				curr=curr.sin();
 			}
 		}
 		return curr;
