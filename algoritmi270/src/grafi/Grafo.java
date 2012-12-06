@@ -22,7 +22,15 @@ public abstract class Grafo<A extends Arco> {
 		this.n = n;
 		this.m = 0;
 	}
-
+	
+	public int n(){
+		return n;
+	}
+	
+	public int m(){
+		return m;
+	}
+	
 	public abstract Iterator<A> archi();
 
 	public abstract Iterator<A> adiacenti(int v);
@@ -110,6 +118,60 @@ public abstract class Grafo<A extends Arco> {
 		return Arrays.asList(distanze);
 	}
 	
+	public List<Double> prim()
+	{	int nodoPartenza=0;
+		Double[] distanze=new Double[n];
+		for(int i=0;i<n;i++)
+			distanze[i]=Double.POSITIVE_INFINITY;
+		boolean[] raggiunti=new boolean[n];
+		for(int i=0;i<n;i++)
+			raggiunti[i]=false;
+		int[] padri = new int[n()];
+		distanze[nodoPartenza]=0.0;
+		padri[0]=0;
+		int nodoCorrente=nodoPartenza;
+		while(nodoCorrente!=-1)
+		{	raggiunti[nodoCorrente]=true;
+			Iterator<A> adnn=adiacenti(nodoCorrente);
+			while(adnn.hasNext())
+			{	A a=adnn.next();
+				if(!raggiunti[a.getFin()])
+				{	double nuovaDist=pesoArco(a);
+					if(nuovaDist<distanze[a.getFin()])
+						distanze[a.getFin()]=nuovaDist;
+						padri[a.getFin()]=nodoCorrente;
+				}
+			}
+			nodoCorrente=-1;
+			double minPeso=Double.POSITIVE_INFINITY;
+			for(int i=0;i<n;i++)
+				if(!raggiunti[i] && distanze[i]<minPeso)
+				{	nodoCorrente=i;
+					minPeso=distanze[i];
+				}
+		}
+		return Arrays.asList(distanze);
+	}
+	
+	public Grafo<ArcoPesato> kruskal(){
+		ArcoPesato[] archi = generaArchiOrdinati();
+		int inseriti = 0;
+		GrafoLista<ArcoPesato> albero = new GrafoLista<ArcoPesato>(n());
+		for(int i=0; (i<archi.length)&& (inseriti<n()-1); i++){
+			List<Integer> lista = albero.depthFirstSearch(archi[i].getIn());
+			if (!lista.contains(archi[i].getFin())){
+				albero.aggiungiArco(archi[i]);
+				inseriti++; 
+			}
+		}
+		return albero;
+	}
+	
+	private ArcoPesato[] generaArchiOrdinati() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public double[][] floydWarshall()
 	{	double[][] distanze=new double[n][n];
 		for(int i=0;i<n;i++)
