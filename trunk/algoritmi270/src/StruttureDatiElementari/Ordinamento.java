@@ -48,5 +48,37 @@ public class Ordinamento {
 			v[in+k]=stage[k];
 		
 	}
+	
+	public static void quickSort(int[] v){
+		if (v!=null) quickSort(v, 0, v.length-1);
+	}
+
+	private static void quickSort(int[] v, int in, int fin) {
+		if(fin<=in)
+			return;
+		int p= partiziona(v,in,fin);
+		quickSort(v,in,p-1);
+		quickSort(v,p+1,fin);
+		
+	}
+
+	private static int partiziona(int[] v, int in, int fin) {
+		//IPLEMENTARE SCELTA A CASO
+		int p=in;
+		int inf=in+1, sup=fin;
+		while(inf<sup){
+			for(;(inf<=fin)&&(v[inf]<v[p]); inf++);
+			for(;(sup>=in)&&(v[p]<=v[sup]);sup--);
+			if(inf<sup){
+				int t = v[inf];
+				v[inf]= v[sup];
+				v[sup]= t;
+			}
+		}
+		int t = v[p];
+		v[p] = v[inf-1];
+		v[inf-1] = t;
+		return inf-1;
+	}
 
 }

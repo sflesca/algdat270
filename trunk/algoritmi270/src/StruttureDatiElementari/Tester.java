@@ -23,8 +23,8 @@ public class Tester {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int[] v = {0,12,4,23,6};
-		Ordinamento.mergeSort(v);
+		int[] v = {4,7,3,8,2,3,7,3};
+		Ordinamento.quickSort(v);
 		for(int i =0; i<v.length; i++)
 			System.out.println(v[i]+",");
 	}
