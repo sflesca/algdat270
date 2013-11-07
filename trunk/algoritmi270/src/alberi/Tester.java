@@ -96,6 +96,55 @@ public class Tester {
 			return verifica(a.sin(),l-1)&& verifica(a.des(),l-1);
 		
 	}
+	
+	/**
+	 * @param a l'albero binario di cui si desireda calcolare l'altezza.
+	 * @return l'altezza dell'albero. Alberi nulli hanno altezza 0.
+	 */
+	public static <T> int altezza(AlberoBin<T> a){
+		if(a==null) return 0;
+		int hs = altezza(a.sin());
+		int hd = altezza(a.des());
+		return 1 + ((hs>hd)?hs:hd);		
+	}
+	
+	/**
+	 * @param a l'albero binario di cui si desireda calcolare l'altezzaMin.
+	 * @return l'altezzaMin dell'albero. Alberi nulli hanno altezzaMin 0.
+	 */
+	public static <T> int altezzaMin(AlberoBin<T> a){
+		if(a==null) return 0;
+		int hs = altezzaMin(a.sin());
+		int hd = altezzaMin(a.des());
+		if((hs==0)&&(hd==0)) return 1;
+		if((hs==0)&&(hd!=0)) return 1+hd;
+		if((hs!=0)&&(hd==0)) return 1+hs;
+		return 1 + ((hs<hd)?hs:hd);		
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param a
+	 * @param liv
+	 * @return restituisce vero se nell'albero a tutti i nodi 
+	 * che si trovano al livello liv hanno valore 0; la radice è al livello 0;
+	 */
+	public static boolean tuttiZeroAlLivello(AlberoBin<Integer> a, int liv){
+		if(a==null) return true;
+		if(liv<0) return true;
+		if(liv==0) return a.val()==0;
+		
+		return tuttiZeroAlLivello(a.sin(),liv-1)&& tuttiZeroAlLivello(a.des(),liv-1);
+	}
+	
+	public static boolean esisteLivelloTuttiZero(AlberoBin<Integer> a){
+		int h = altezza(a);
+		for(int i=0; i<h;i++)
+			if(tuttiZeroAlLivello(a,i))
+				return true;
+		return false;
+	}
 
 	/**
 	 * @param args
