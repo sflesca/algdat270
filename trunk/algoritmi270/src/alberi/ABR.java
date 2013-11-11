@@ -48,8 +48,60 @@ public class ABR<T extends Comparable> implements Dizionario<T> {
 	 */
 	@Override
 	public void rimuovi(T x) {
-		// TODO Auto-generated method stub
+		if (coll==null) return;
+		AlberoBinLF<T> tmp = (AlberoBinLF<T>) cercaNodo(x);
+		if(tmp.val().equals(x)){
+			while((tmp.sin()!=null)&&(tmp.des()!=null)){
+				AlberoBinLF<T> tt = (AlberoBinLF<T>) tmp.des();
+				while(tt.sin()!=null) tt = (AlberoBinLF<T>) tt.sin();
+				tmp.setVal(tt.val());
+				tmp=tt;
+			}
 
+			AlberoBinLF<T> padre = (AlberoBinLF<T>) tmp.padre();
+			if(padre==null){
+				if(tmp.sin()!=null){
+					coll = tmp.sin();
+					((AlberoBinLF<T>) tmp.sin()).pota();
+				}else{
+					coll = tmp.des();
+					((AlberoBinLF<T>) tmp.des()).pota();
+				}
+			}else{
+				if((tmp.sin()==null)&&(tmp.des()==null))
+					tmp.pota();
+				else{
+					AlberoBinLF<T> xx = (AlberoBinLF<T>) tmp.padre();
+					if(xx.sin()==tmp){
+						if(tmp.sin()!=null){
+							tmp.pota();
+							AlberoBinLF<T> sin = (AlberoBinLF<T>) tmp.sin();
+							sin.pota();
+							padre.setSin(sin);
+						}else{
+							tmp.pota();
+							AlberoBinLF<T> des = (AlberoBinLF<T>) tmp.des();
+							des.pota();
+							padre.setSin(des);							
+						}
+					}else{
+						if(tmp.sin()!=null){
+							tmp.pota();
+							AlberoBinLF<T> sin = (AlberoBinLF<T>) tmp.sin();
+							sin.pota();
+							padre.setDes(sin);
+						}else{
+							tmp.pota();
+							AlberoBinLF<T> des = (AlberoBinLF<T>) tmp.des();
+							des.pota();
+							padre.setDes(des);							
+						}						
+					}
+					
+				}
+			}
+			
+		}
 	}
 
 	/* (non-Javadoc)
