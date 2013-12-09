@@ -43,7 +43,8 @@ public abstract class Grafo<A extends Arco> {
 
 	public abstract boolean arco(int v1, int v2);
 
-	protected void depthFirstSearch(int nodoPartenza, List<Integer> risultato, boolean[] visitati)
+	protected void depthFirstSearch(int nodoPartenza, List<Integer> risultato, 
+			boolean[] visitati)
 	{	risultato.add(nodoPartenza);
 		visitati[nodoPartenza]=true;
 		Iterator<A> itAdiacenti=adiacenti(nodoPartenza);
