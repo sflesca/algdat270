@@ -54,6 +54,7 @@ public class GrafoMA<A extends Arco> extends Grafo<A> {
 	 */
 	@Override
 	public void aggiungiArco(Arco a) {
+		if(a==null) return;
 		if (M[a.getIn()][a.getFin()] == null)
 			m++;
 		M[a.getIn()][a.getFin()] = a;
@@ -66,6 +67,7 @@ public class GrafoMA<A extends Arco> extends Grafo<A> {
 	 */
 	@Override
 	public boolean rimuoviArco(Arco a) {
+		if(a==null) return false;
 		if (M[a.getIn()][a.getFin()] != null) {
 			M[a.getIn()][a.getFin()] = null;
 			m--;

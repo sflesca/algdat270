@@ -145,7 +145,56 @@ public class Tester {
 				return true;
 		return false;
 	}
+	
+	public static boolean diRicerca(AlberoBin<Integer> a){
+		if(a==null) return true;
+		return 
+				tuttiMinori(a.sin(),a.val())&&
+				tuttiMaggiori(a.des(),a.val())&&
+				diRicerca(a.sin())&& 
+				diRicerca(a.des());
+	}
 
+	private static boolean tuttiMaggiori(AlberoBin<Integer> a, int val) {
+		if(a==null) return true;
+		return a.val()>val && tuttiMaggiori(a.sin(),val)&& tuttiMaggiori(a.des(),val);
+	}
+
+	private static boolean tuttiMinori(AlberoBin<Integer> a, int val) {
+		if(a==null) return true;
+		return a.val()<val && tuttiMinori(a.sin(),val)&& tuttiMinori(a.des(),val);
+	}
+	
+	public static boolean diRicercaMinMax(AlberoBin<Integer> a, int min, int max){
+		if(a==null) return true;
+		return (a.val()<=max)&&(a.val()>=min)&&
+				diRicercaMinMax(a.sin(),min,a.val()-1)&&
+				diRicercaMinMax(a.des(),a.val()+1,max);
+
+	}
+	
+	public static boolean diRicercaEfficiente(AlberoBin<Integer> a){
+		if(a==null) return true;
+		AlberoBin<Integer> curr=a;
+		while(curr.sin()!=null) curr=curr.sin();
+		int min = curr.val();
+		curr=a;
+		while(curr.des()!=null) curr=curr.des();
+		int max = curr.val();
+		return diRicercaMinMax(a,min,max);
+	}
+
+	
+	
+	protected class CoppiaAB{
+		public int altezza;
+		public boolean bilanciato;
+	}
+	
+	public static CoppiaAB bilanciato(AlberoBin<Integer> a){
+		return null;
+	}
+	
 	/**
 	 * @param args
 	 */

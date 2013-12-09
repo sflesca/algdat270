@@ -66,7 +66,7 @@ public class GrafoLista<A extends Arco> extends Grafo<A> {
 			}else{
 				it2=it.next().iterator();
 			}		
-			avanza();
+			if(hasNext) avanza();
 		}
 		
 		@Override
