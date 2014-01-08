@@ -119,6 +119,48 @@ public abstract class Grafo<A extends Arco> {
 		return Arrays.asList(distanze);
 	}
 	
+	public boolean eAciclicoGO(){
+		int[] gradi = calcolaGradiEntrata();
+		boolean[] rimossi = new boolean[n()];
+		int daRimuovere = cercaNodoGradoZeroNonRimosso(gradi, rimossi);
+		while(daRimuovere!=-1){
+			//RIMUOVIAMO IL NODO daRimuovere
+			rimossi[daRimuovere]= true;
+			Iterator<A> it = adiacenti(daRimuovere);
+			while (it.hasNext())
+				gradi[it.next().getFin()]--;
+			
+			//CERCHIAMO IL PROX NODO DA RIMUOVERE
+			daRimuovere = cercaNodoGradoZeroNonRimosso(gradi, rimossi);
+		}
+		if (tuttiRimossi(rimossi))
+			return true;
+		return false;
+		
+	}
+	
+	private int[] calcolaGradiEntrata() {
+		int[] gradi = new int[n()];
+		Iterator<A> it = archi();
+		while (it.hasNext())
+			gradi[it.next().getFin()]++;
+		return gradi;
+	}
+
+	private boolean tuttiRimossi(boolean[] rimossi) {
+		for(int i=0; i<rimossi.length;i++)
+			if(!rimossi[i])
+				return false;
+		return true;
+	}
+
+	private int cercaNodoGradoZeroNonRimosso(int[] gradi, boolean[] rimossi) {
+		for(int i= 0; i<gradi.length; i++)
+			if(!rimossi[i]&&(gradi[i]==0))
+				return i;
+		return -1;
+	}
+
 	public List<Double> prim()
 	{	int nodoPartenza=0;
 		Double[] distanze=new Double[n];
@@ -138,9 +180,10 @@ public abstract class Grafo<A extends Arco> {
 			{	A a=adnn.next();
 				if(!raggiunti[a.getFin()])
 				{	double nuovaDist=pesoArco(a);
-					if(nuovaDist<distanze[a.getFin()])
+					if(nuovaDist<distanze[a.getFin()]){
 						distanze[a.getFin()]=nuovaDist;
 						padri[a.getFin()]=nodoCorrente;
+					}
 				}
 			}
 			nodoCorrente=-1;
@@ -154,18 +197,27 @@ public abstract class Grafo<A extends Arco> {
 		return Arrays.asList(distanze);
 	}
 	
-	public Grafo<ArcoPesato> kruskal(){
-		ArcoPesato[] archi = generaArchiOrdinati();
+	public Grafo<ArcoPesato> kruskal(){ // theta( m n) || (union find) theta(m lg n)
+		ArcoPesato[] archi = generaArchiOrdinati(); // theta(m lg n) || theta(n^2 + m lg n)
 		int inseriti = 0;
 		GrafoLista<ArcoPesato> albero = new GrafoLista<ArcoPesato>(n());
-		for(int i=0; (i<archi.length)&& (inseriti<n()-1); i++){
-			List<Integer> lista = albero.depthFirstSearch(archi[i].getIn());
-			if (!lista.contains(archi[i].getFin())){
-				albero.aggiungiArco(archi[i]);
-				inseriti++; 
+		// creare union find - theta(n)
+		
+		//theta (m + n lg n)
+		for(int i=0; (i<archi.length)&& (inseriti<n()-1); i++){ // m volte
+			List<Integer> lista = albero.depthFirstSearch(archi[i].getIn()); // theta(n) || theta (n^2)
+			// 2 find theta(1)
+			if (!lista.contains(archi[i].getFin())){ // theta(1)
+				albero.aggiungiArco(archi[i]); // theta(1)
+				inseriti++; // theta(1)
+				// union degli insiemi che contengono archi[i].getFin()
+				// e archi[i].getIn() - theta(n)
+				// complessivamente facciamo n-1 union che hanno un costo theta(n lg n)
 			}
 		}
-		return albero;
+		if (inseriti==n()-1)
+			return albero;
+		return null;
 	}
 	
 	private ArcoPesato[] generaArchiOrdinati() {
