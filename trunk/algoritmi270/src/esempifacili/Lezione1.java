@@ -20,6 +20,13 @@ public class Lezione1 {
 		return n* fatt(n-1);
 	}
 	
+	public static int fattIt(int n){
+		int fatt = 1;
+		for (int i=1;i<=n;i++)
+			fatt= fatt*i;
+		return fatt;
+	}
+	
 	public static int fibRic(int n){
 		if(n<1) return 1;
 		return fibRic(n-1)+fibRic(n-2);
