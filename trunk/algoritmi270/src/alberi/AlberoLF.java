@@ -104,7 +104,7 @@ public class AlberoLF<T> implements Albero<T> {
 	public boolean setFiglio(AlberoLF<T> a, int pos) throws AlberiDiversiException{
 		if ((pos>= numMaxFigli)|| (pos<0))
 			throw new ArrayIndexOutOfBoundsException();
-		if (a==null) return true;
+		if (a==null) return false;
 		if (a.gradoMax()!=gradoMax())
 			throw new AlberiDiversiException();
 		if (figlio(pos)!=null)

@@ -2,6 +2,14 @@ package alberi;
 
 public class Tester {
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param a un albero binario che contiene Integer
