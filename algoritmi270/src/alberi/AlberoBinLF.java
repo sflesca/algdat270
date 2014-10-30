@@ -77,7 +77,6 @@ public class AlberoBinLF<T> extends AlberoLF<T> implements AlberoBin<T>{
 		l.add(val());
 		AlberoBinLF<T> d = (AlberoBinLF<T>) des();
 		if (d!=null) d.visitaInfissa(l);
-
 	}
 
 	@Override

@@ -21,10 +21,10 @@ public class Lezione1 {
 	}
 	
 	public static int fattIt(int n){
-		int fatt = 1;
-		for (int i=1;i<=n;i++)
-			fatt= fatt*i;
-		return fatt;
+		int fatt = 1;                     //theta(1)
+		for (int i=1;i<=n;i++)	          //theta(lg(n) ) -> theta(n * lg(n))
+			fatt= fatt*i;                 //theta(lg(fatt)) -> theta(n^2 * lg(n))
+		return fatt;                      //theta(lg(fatt))
 	}
 	
 	public static int fibRic(int n){
