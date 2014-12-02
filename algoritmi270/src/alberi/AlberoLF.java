@@ -15,6 +15,7 @@ public class AlberoLF<T> implements Albero<T> {
 
 	protected int numMaxFigli;
 	protected Vettore<AlberoLF<T>> figli;
+	protected AlberoLF<T> padre=null;
 
 
 	protected int posFiglio = -1;
