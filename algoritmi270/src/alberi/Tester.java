@@ -203,6 +203,33 @@ public class Tester {
 		return null;
 	}
 	
+	
+	public static boolean identici(AlberoBin<Integer> a, AlberoBin<Integer> b){
+		if((a==null)||(b==null)) 
+			return a==b;
+		return (a.val()==b.val())&& identici(a.sin(),b.sin()) && identici(a.des(),b.des());
+	}
+	
+	public static boolean ValoriIdentici(AlberoBin<Integer> a, AlberoBin<Integer> b){
+		return ValoriMaggiori(a,b)&&ValoriMaggiori(b,a);
+	}
+	private static boolean ValoriMaggiori(AlberoBin<Integer> a,
+			AlberoBin<Integer> b) {
+		// Induzione sul numero di nodi di a
+		if (a==null) return true;
+		return appare(b,a.val())
+				&& ValoriMaggiori(a.sin(),b)
+				&& ValoriMaggiori(a.des(),b);
+	}
+
+	private static boolean appare(AlberoBin<Integer> b, Integer val) {
+		// Induzione sul numero di nodi di b
+		if (b==null) return false;
+		return b.val().equals(val) 
+				|| appare(b.sin(),val) 
+				|| appare(b.des(),val);
+	}
+
 	/**
 	 * @param args
 	 */
