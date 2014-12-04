@@ -65,7 +65,7 @@ public class ABR<T extends Comparable> implements Dizionario<T> {
 					((AlberoBinLF<T>) tmp.sin()).pota();
 				}else{
 					coll = tmp.des();
-					((AlberoBinLF<T>) tmp.des()).pota();
+					if (tmp.des()!=null) ((AlberoBinLF<T>) tmp.des()).pota();
 				}
 			}else{
 				if((tmp.sin()==null)&&(tmp.des()==null))
