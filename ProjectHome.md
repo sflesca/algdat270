@@ -1,0 +1,1 @@
+Il progetto contiene classi di esempio sviluppate nel corso di algoritmi e strutture dati.
