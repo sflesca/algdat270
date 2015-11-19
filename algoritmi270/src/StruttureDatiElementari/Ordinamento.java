@@ -54,11 +54,28 @@ public class Ordinamento {
 	}
 
 	private static void quickSort(int[] v, int in, int fin) {
+		while(!(fin<=in)){
+			int p= partiziona(v,in,fin);
+			if(p<(in+fin)/2){
+				quickSort(v,in,p-1);
+				//quickSort(v,p+1,fin);
+				in=p+1;
+			}else{
+				quickSort(v,p+1,fin);
+				//quickSort(v,in,p-1);
+				fin=p-1;
+			}
+		}
+		return;
+		
+	}
+	
+	private static void quickSortOriginale(int[] v, int in, int fin) {
 		if(fin<=in)
 			return;
 		int p= partiziona(v,in,fin);
-		quickSort(v,in,p-1);
-		quickSort(v,p+1,fin);
+		quickSortOriginale(v,in,p-1);
+		quickSortOriginale(v,p+1,fin);
 		
 	}
 

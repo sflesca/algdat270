@@ -162,11 +162,12 @@ public class AlberoLF<T> implements Albero<T> {
 	}
 	
 	private void visitaAnticipata(List<T> l){
+		l.add(val());
 		Iterator<Albero<T>> it = figli();
 		while(it.hasNext()){
 			((AlberoLF<T>) it.next()).visitaAnticipata(l);
 		}
-		l.add(val());
+		
 	}
 
 
@@ -180,11 +181,10 @@ public class AlberoLF<T> implements Albero<T> {
 
 	private void visitaPosticipata(List<T> l){
 		Iterator<Albero<T>> it = figli();
-		l.add(val());
 		while(it.hasNext()){
-			((AlberoLF<T>) it.next()).visitaAnticipata(l);
+			((AlberoLF<T>) it.next()).visitaPosticipata(l);
 		}
-
+		l.add(val());
 	}
 
 	@Override

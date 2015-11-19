@@ -230,6 +230,31 @@ public class Tester {
 				|| appare(b.des(),val);
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 * 
+	 * @param b
+	 * @param val
+	 * @return restituisce vero se e solo se nell'albero b 
+	 * vi è un nodo avente valore val 
+	 * 
+	 */
+	public boolean ePresente(AlberoBin<Integer> b, Integer val){
+		if (b==null) return false;
+		return b.val().equals(val) ||
+				ePresente(b.sin(),val)||
+				ePresente(b.des(),val);
+	}
+	
+	
 	/**
 	 * @param args
 	 */

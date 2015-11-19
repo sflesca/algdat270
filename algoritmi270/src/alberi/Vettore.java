@@ -55,7 +55,7 @@ public class Vettore<T> {
 		}
 
 		public void remove() {
-
+			throw new UnsupportedOperationException();
 		}
 
 		private void succ() {
