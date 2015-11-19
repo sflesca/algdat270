@@ -68,15 +68,57 @@ public class TabellaHash<PK,T> {
 	
 	int size=0;
 
+	private double FCMAX=1.1;
+
 	public T cerca(PK key) {
+		int hs = key.hashCode();
+		if(buckets[hs%buckets.length]==null)return null;
+		for(Pair<PK,T> p:buckets[hs%buckets.length])
+			if(p.getKey().equals(key))
+				return p.getObj();
 		return null;
 	}
 	
 	public boolean rimuovi(PK key){
-		return false;
+		if (cerca(key)==null)
+			return false;
+		size--;
+		Pair<PK,T> p = new Pair<PK,T>(key, null);
+		buckets[key.hashCode()%buckets.length].remove(p);
+		if(size<buckets.length/4*FCMAX)
+			decreaseSize();
+		return true;
 	}
 	
+	private void decreaseSize() {
+		LinkedList<Pair<PK,T>>[] oldBuckets = buckets;
+		buckets = new LinkedList[oldBuckets.length/2];
+		for(int i=0;i<oldBuckets.length;i++)
+			if(oldBuckets[i]!=null)
+				for(Pair<PK,T> p : oldBuckets[i])
+					inserisci(p.getKey(),p.getObj());
+	}
+
 	public boolean inserisci(PK key, T o){
-		return false;
+		if (cerca(key)!=null)
+			return false;
+		size++;
+		if (size>buckets.length*FCMAX)
+			increaseSize();
+		int hs = key.hashCode();
+		if (buckets[hs%buckets.length]==null)
+			buckets[hs%buckets.length]= new LinkedList<Pair<PK,T>>();
+		buckets[hs%buckets.length].add(new Pair<PK,T>(key,o));
+		return true;
+	}
+
+	private void increaseSize() {
+		LinkedList<Pair<PK,T>>[] oldBuckets = buckets;
+		buckets = new LinkedList[oldBuckets.length*2];
+		for(int i=0;i<oldBuckets.length;i++)
+			if(oldBuckets[i]!=null)
+				for(Pair<PK,T> p : oldBuckets[i])
+					inserisci(p.getKey(),p.getObj());
+		
 	}
 }
