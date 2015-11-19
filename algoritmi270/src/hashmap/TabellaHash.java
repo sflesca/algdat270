@@ -1,5 +1,6 @@
 package hashmap;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class TabellaHash<PK,T> {
@@ -62,13 +63,24 @@ public class TabellaHash<PK,T> {
 		private TabellaHash<PK,T> getOuterType() {
 			return (TabellaHash<PK, T>) TabellaHash.this;
 		}
+
+		@Override
+		public String toString() {
+			return "Pair [key=" + key + ", obj=" + obj + "]";
+		}
 	}
+
+	private static final int INITIALSIZE = 100;
 	
-	LinkedList<Pair<PK,T>>[] buckets; 
+	LinkedList<Pair<PK,T>>[] buckets=new LinkedList[INITIALSIZE]; 
 	
 	int size=0;
 
 	private double FCMAX=1.1;
+
+	public TabellaHash() {
+		super();
+	}
 
 	public T cerca(PK key) {
 		int hs = key.hashCode();
@@ -93,6 +105,7 @@ public class TabellaHash<PK,T> {
 	private void decreaseSize() {
 		LinkedList<Pair<PK,T>>[] oldBuckets = buckets;
 		buckets = new LinkedList[oldBuckets.length/2];
+		size=0;
 		for(int i=0;i<oldBuckets.length;i++)
 			if(oldBuckets[i]!=null)
 				for(Pair<PK,T> p : oldBuckets[i])
@@ -102,9 +115,9 @@ public class TabellaHash<PK,T> {
 	public boolean inserisci(PK key, T o){
 		if (cerca(key)!=null)
 			return false;
-		size++;
-		if (size>buckets.length*FCMAX)
+		if (size>=buckets.length*FCMAX)
 			increaseSize();
+		size++;
 		int hs = key.hashCode();
 		if (buckets[hs%buckets.length]==null)
 			buckets[hs%buckets.length]= new LinkedList<Pair<PK,T>>();
@@ -115,10 +128,16 @@ public class TabellaHash<PK,T> {
 	private void increaseSize() {
 		LinkedList<Pair<PK,T>>[] oldBuckets = buckets;
 		buckets = new LinkedList[oldBuckets.length*2];
+		size=0;
 		for(int i=0;i<oldBuckets.length;i++)
 			if(oldBuckets[i]!=null)
 				for(Pair<PK,T> p : oldBuckets[i])
 					inserisci(p.getKey(),p.getObj());
 		
+	}
+
+	@Override
+	public String toString() {
+		return "TabellaHash [buckets=" + Arrays.toString(buckets) + ", size=" + size + "]";
 	}
 }
