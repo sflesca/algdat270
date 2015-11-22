@@ -32,6 +32,8 @@ public class TabellaHash<PK,T> {
 			this.obj = obj;
 		}
 
+		
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -83,11 +85,12 @@ public class TabellaHash<PK,T> {
 	}
 
 	public T cerca(PK key) {
-		int hs = key.hashCode();
+		Pair<PK,T> p = new Pair<PK,T>(key,null);
+		int hs = p.hashCode();
 		if(buckets[hs%buckets.length]==null)return null;
-		for(Pair<PK,T> p:buckets[hs%buckets.length])
-			if(p.getKey().equals(key))
-				return p.getObj();
+		for(Pair<PK,T> p1 : buckets[hs%buckets.length])
+			if(p1.equals(p))
+				return p1.getObj();
 		return null;
 	}
 	
@@ -96,7 +99,7 @@ public class TabellaHash<PK,T> {
 			return false;
 		size--;
 		Pair<PK,T> p = new Pair<PK,T>(key, null);
-		buckets[key.hashCode()%buckets.length].remove(p);
+		buckets[p.hashCode()%buckets.length].remove(p);
 		if(size<buckets.length/4*FCMAX)
 			decreaseSize();
 		return true;
@@ -118,10 +121,11 @@ public class TabellaHash<PK,T> {
 		if (size>=buckets.length*FCMAX)
 			increaseSize();
 		size++;
-		int hs = key.hashCode();
+		Pair<PK,T> p = new Pair<PK,T>(key,o);
+		int hs = p.hashCode();
 		if (buckets[hs%buckets.length]==null)
 			buckets[hs%buckets.length]= new LinkedList<Pair<PK,T>>();
-		buckets[hs%buckets.length].add(new Pair<PK,T>(key,o));
+		buckets[hs%buckets.length].add(p);
 		return true;
 	}
 
