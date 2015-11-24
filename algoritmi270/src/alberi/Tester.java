@@ -254,6 +254,19 @@ public class Tester {
 				ePresente(b.des(),val);
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param a
+	 * @param liv
+	 * @return restituisce vero se e solo se nell'albero a 
+	 * tutti i nodi che appaiono al livello liv hanno valore dispari
+	 * 
+	 */
+	public boolean verificaSommaAntenati(AlberoBin<Integer> a,int liv){
+		return false;
+	}
+	
 	
 	/**
 	 * @param args
