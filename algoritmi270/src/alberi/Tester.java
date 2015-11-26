@@ -263,10 +263,25 @@ public class Tester {
 	 * tutti i nodi che appaiono al livello liv hanno valore dispari
 	 * 
 	 */
-	public boolean verificaSommaAntenati(AlberoBin<Integer> a,int liv){
-		return false;
+	public boolean verificaBho(AlberoBin<Integer> a,int liv){
+		if (a==null) return true;
+		if (liv<0) return true;
+		if (liv==0) return a.val()%2!=0;
+		return verificaBho(a.sin(),liv-1)&& verificaBho(a.des(),liv-1);
 	}
 	
+	
+	/**
+	 * 
+	 * 
+	 * @param a
+	 * @param liv
+	 * @return restituisce vero se e solo se nell'albero a 
+	 * almeno due nodi che appaiono al livello liv hanno valore dispari
+	 * 
+	 */
+	public boolean verificaBho2(AlberoBin<Integer> a,int liv){
+		return true;}
 	
 	/**
 	 * @param args
