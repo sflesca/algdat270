@@ -36,5 +36,17 @@ public abstract class GrafoNO<A extends Arco> extends Grafo<A> {
 		int k = nComponentiConnesseMassimali();
 		return n()==m()+k;
 	}
+	
+	
+	public boolean eAlbero(){
+		return n()==m()+1&& eConnesso();
+	}
+
+	public boolean eConnesso() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 
 }

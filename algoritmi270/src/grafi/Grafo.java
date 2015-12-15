@@ -31,17 +31,19 @@ public abstract class Grafo<A extends Arco> {
 		return m;
 	}
 	
-	public abstract Iterator<A> archi();
+	public abstract Iterator<A> archi();//MATRICE: theta(n^2) 
+										//LISTA: theta(n+m)
+	
+	public abstract Iterator<A> adiacenti(int v); 	//MATRICE: theta(n) 
+													//LISTA: theta(gout(v))
 
-	public abstract Iterator<A> adiacenti(int v);
+	public abstract void aggiungiArco(A a);// MATRICE: theta(1)
 
-	public abstract void aggiungiArco(A a);
+	public abstract boolean rimuoviArco(A a);// MATRICE: theta(1)
 
-	public abstract boolean rimuoviArco(A a);
+	public abstract boolean arco(A a);// MATRICE: theta(1) 
 
-	public abstract boolean arco(A a);
-
-	public abstract boolean arco(int v1, int v2);
+	public abstract boolean arco(int v1, int v2);// MATRICE: theta(1)
 
 	protected void depthFirstSearch(int nodoPartenza, List<Integer> risultato, 
 			boolean[] visitati)
@@ -119,21 +121,21 @@ public abstract class Grafo<A extends Arco> {
 		return Arrays.asList(distanze);
 	}
 	
-	public boolean eAciclicoGO(){
-		int[] gradi = calcolaGradiEntrata();
-		boolean[] rimossi = new boolean[n()];
+	public boolean eAciclicoGO(){ //theta(n^2 + m lg n)/theta((n lg n) + m lg n) 
+		int[] gradi = calcolaGradiEntrata(); //theta(n^2)/theta((n lg n)+m)
+		boolean[] rimossi = new boolean[n()]; //theta(n)
 		int daRimuovere = cercaNodoGradoZeroNonRimosso(gradi, rimossi);
-		while(daRimuovere!=-1){
+		while(daRimuovere!=-1){ //theta((n lg n) + m lg n)
 			//RIMUOVIAMO IL NODO daRimuovere
 			rimossi[daRimuovere]= true;
 			Iterator<A> it = adiacenti(daRimuovere);
 			while (it.hasNext())
-				gradi[it.next().getFin()]--;
+				gradi[it.next().getFin()]--; //theta(lg n)
 			
 			//CERCHIAMO IL PROX NODO DA RIMUOVERE
-			daRimuovere = cercaNodoGradoZeroNonRimosso(gradi, rimossi);
+			daRimuovere = cercaNodoGradoZeroNonRimosso(gradi, rimossi); //theta(lg n)
 		}
-		if (tuttiRimossi(rimossi))
+		if (tuttiRimossi(rimossi))//theta(n)
 			return true;
 		return false;
 		
