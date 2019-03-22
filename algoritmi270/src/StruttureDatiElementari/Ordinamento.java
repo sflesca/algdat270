@@ -97,5 +97,22 @@ public class Ordinamento {
 		v[inf-1] = t;
 		return inf-1;
 	}
+	
+	public static int mediano(int[] v){
+		return mediano(v, 0, v.length-1);
+
+	}
+	
+	private static int mediano(int[] v, int in, int fin) {
+		if(fin<=in)
+			return v[v.length/2];
+		int p= partiziona(v,in,fin);
+		if (p==v.length/2) return v[v.length/2];
+		if (p>v.length/2)
+			return mediano(v, in, p-1);
+		else
+			return mediano(v, p+1, fin);
+		
+	}
 
 }
