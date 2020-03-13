@@ -6,13 +6,14 @@ public class Lezione1 {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public static boolean presente(int[] v, int x){
-		for(int i =0; i<v.length; i++)
+	// n (dimensione dell'input) è il numero di celle in v
+	// caso migliore 4 istruzioni Theta(1)
+	// caso peggiore 3 + 3 *n Theta(n)----- theta(n)
+	public static boolean presente(int[] v, int x){ 
+		for(int i =0; i<v.length; i++) 
 			if(v[i]==x)
 				return true;
 		return false;
-		
 	}
 	
 	public static int fatt(int n){
