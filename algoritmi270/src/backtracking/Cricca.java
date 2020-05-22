@@ -89,4 +89,10 @@ public class Cricca extends ProblemaBack {
 		System.out.println(Arrays.toString(c.nodes));
 	}
 
+	@Override
+	protected void costruisciSoluzione(int liv) {
+		// TODO Auto-generated method stub
+		return;
+	}
+
 }

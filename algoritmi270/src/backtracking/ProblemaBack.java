@@ -13,7 +13,10 @@ public abstract class ProblemaBack {
 		if (!primaScelta(liv)) return false;
 		while (liv >=0){
 			if(verificaVincoli(liv)){
-				if(solCompleta(liv)) return true;
+				if(solCompleta(liv)) {
+					costruisciSoluzione(liv);
+					return true;
+				}
 				liv++;
 				if(!primaScelta(liv)){
 					rivedi= true;
@@ -42,6 +45,8 @@ public abstract class ProblemaBack {
 
 
 	protected abstract boolean primaScelta(int liv);
+	
+	protected abstract void costruisciSoluzione(int liv);
 
 
 	/**
