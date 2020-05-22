@@ -7,13 +7,13 @@ public abstract class ProblemaBack {
 	}
 
 	
-	public void risolvi(){
+	public boolean risolvi(){
 		int liv = 0;
 		boolean rivedi = false;
-		if (!primaScelta(liv)) return;
+		if (!primaScelta(liv)) return false;
 		while (liv >=0){
 			if(verificaVincoli(liv)){
-				if(solCompleta(liv)) return;
+				if(solCompleta(liv)) return true;
 				liv++;
 				if(!primaScelta(liv)){
 					rivedi= true;
@@ -23,12 +23,13 @@ public abstract class ProblemaBack {
 					rivedi = true;
 				}
 			}
-			while(rivedi&& liv>0){
+			while(rivedi&& liv>=0){
 				liv--;
-				if(successivaScelta(liv))
+				if(liv>=0 && successivaScelta(liv))
 					rivedi= false;
 			}
 		}
+		return false;
 	}
 	
 	protected abstract boolean successivaScelta(int liv);
