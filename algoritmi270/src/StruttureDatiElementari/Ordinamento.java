@@ -18,8 +18,8 @@ public class Ordinamento {
 
 	/**
 	 * @param v riveve un vettore di interi non nullo
-	 * @param i
-	 * @param j
+	 * @param in
+	 * @param fin
 	 */
 	private static void mergeSort(int[] v, int in, int fin) {
 		if(fin<=in)
@@ -67,7 +67,6 @@ public class Ordinamento {
 			}
 		}
 		return;
-		
 	}
 	
 	private static void quickSortOriginale(int[] v, int in, int fin) {
@@ -80,21 +79,18 @@ public class Ordinamento {
 	}
 
 	private static int partiziona(int[] v, int in, int fin) {
-		//IPLEMENTARE SCELTA A CASO
+		int rnd = (int) Math.floor(Math.random()*(fin-in+1));
+		int tmp = v[in]; v[in]= v[rnd]; v[rnd]= tmp;
 		int p=in;
 		int inf=in+1, sup=fin;
 		while(inf<sup){
 			for(;(inf<=fin)&&(v[inf]<v[p]); inf++);
 			for(;(sup>=in)&&(v[p]<=v[sup]);sup--);
 			if(inf<sup){
-				int t = v[inf];
-				v[inf]= v[sup];
-				v[sup]= t;
+				int t = v[inf]; v[inf]= v[sup]; v[sup]= t;
 			}
 		}
-		int t = v[p];
-		v[p] = v[inf-1];
-		v[inf-1] = t;
+		int t = v[p]; v[p] = v[inf-1]; v[inf-1] = t;
 		return inf-1;
 	}
 	

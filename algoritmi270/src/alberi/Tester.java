@@ -309,16 +309,11 @@ public class Tester {
 //		
 //		System.out.println(verifica(a,2));
 		
+		int[] vec = {0,1,2,3,4,5};
 		ABR<Integer> a = new ABR<Integer>();
-		a.inserisci(10);
-		System.out.println(a.toString());
-		a.inserisci(18);
-		System.out.println(a.toString());
-		a.inserisci(10);
-		a.inserisci(19);
-		a.inserisci(6);
-		a.inserisci(13);
 		
+		for (int i = 0; i<vec.length;i++)
+			a.inserisci(vec[i]);
 		System.out.println(a.toString());
 		
 	}

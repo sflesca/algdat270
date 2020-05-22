@@ -73,7 +73,7 @@ public class Scheduler {
 		g.aggiungiArco(new Arco(2,0));
 		g.aggiungiArco(new Arco(3,0));
 		g.aggiungiArco(new Arco(3,1));
-		g.aggiungiArco(new Arco(1,3));
+		//g.aggiungiArco(new Arco(1,3));
 		int[] tempi = {2, 4, 5, 1, 2 };
 		Scheduler s = new Scheduler(g,tempi);
 		int[] tempipartenza = s.schedule();

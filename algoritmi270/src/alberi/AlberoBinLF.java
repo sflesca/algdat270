@@ -97,7 +97,7 @@ public class AlberoBinLF<T> extends AlberoLF<T> implements AlberoBin<T>{
 		
 		public IteratorVI(AlberoBin<T> a){
 			curr=a;
-			while(curr.sin()!=null) curr= curr.sin();
+			//while(curr.sin()!=null) curr= curr.sin();
 			hasNext=true;
 		}
 

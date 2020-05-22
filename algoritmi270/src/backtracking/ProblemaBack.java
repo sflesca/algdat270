@@ -11,7 +11,7 @@ public abstract class ProblemaBack {
 		int liv = 0;
 		boolean rivedi = false;
 		if (!primaScelta(liv)) return;
-		while (liv <=0){
+		while (liv >=0){
 			if(verificaVincoli(liv)){
 				if(solCompleta(liv)) return;
 				liv++;

@@ -12,7 +12,7 @@ public class ArcoPesato extends Arco {
 	public double getPeso() {
 		return peso;
 	}
-	public void setIn(double peso) {
+	public void setPeso(double peso) {
 		this.peso = peso;
 	}
 	

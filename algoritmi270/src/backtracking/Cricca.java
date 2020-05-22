@@ -3,6 +3,8 @@
  */
 package backtracking;
 
+import java.util.Arrays;
+
 import grafi.*;
 
 /**
@@ -70,8 +72,21 @@ public class Cricca extends ProblemaBack {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Grafo<Arco> g = new GrafoMA<Arco>(7);
+		g.aggiungiArco(new Arco(0,1));
+		g.aggiungiArco(new Arco(1,0));
+		g.aggiungiArco(new Arco(0,2));
+		g.aggiungiArco(new Arco(2,0));
+		g.aggiungiArco(new Arco(2,1));
+		g.aggiungiArco(new Arco(1,2));
+		g.aggiungiArco(new Arco(0,4));
+		g.aggiungiArco(new Arco(4,0));
+		g.aggiungiArco(new Arco(5,6));
+		g.aggiungiArco(new Arco(6,5));
+		
+		Cricca c = new Cricca(g,3);
+		c.risolvi();
+		System.out.println(Arrays.toString(c.nodes));
 	}
 
 }
