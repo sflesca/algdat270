@@ -48,6 +48,7 @@ public class Cricca extends ProblemaBack {
 	 */
 	@Override
 	protected boolean verificaVincoli(int liv) {
+		System.out.println("VERIFICAVINCOLI"+Arrays.toString(nodes)+" LIV:"+liv);
 		for(int i=0; i<liv; i++)
 			if(!g.arco(nodes[i], nodes[liv]))
 				return false;
@@ -73,19 +74,19 @@ public class Cricca extends ProblemaBack {
 	 */
 	public static void main(String[] args) {
 		Grafo<Arco> g = new GrafoMA<Arco>(7);
-		g.aggiungiArco(new Arco(0,1));
-		g.aggiungiArco(new Arco(1,0));
-		g.aggiungiArco(new Arco(0,2));
-		g.aggiungiArco(new Arco(2,0));
-		g.aggiungiArco(new Arco(2,1));
-		g.aggiungiArco(new Arco(1,2));
-		g.aggiungiArco(new Arco(0,4));
-		g.aggiungiArco(new Arco(4,0));
+		g.aggiungiArco(new Arco(0,6));
+		g.aggiungiArco(new Arco(6,0));
+		g.aggiungiArco(new Arco(0,5));
+		g.aggiungiArco(new Arco(5,0));
 		g.aggiungiArco(new Arco(5,6));
 		g.aggiungiArco(new Arco(6,5));
+		g.aggiungiArco(new Arco(0,4));
+		g.aggiungiArco(new Arco(4,0));
+		g.aggiungiArco(new Arco(2,1));
+		g.aggiungiArco(new Arco(1,2));
 		
 		Cricca c = new Cricca(g,3);
-		c.risolvi();
+		System.out.println("Esiste:"+c.risolvi());
 		System.out.println(Arrays.toString(c.nodes));
 	}
 

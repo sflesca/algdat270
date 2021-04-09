@@ -70,7 +70,7 @@ public class SubSetSum extends ProblemaBack {
 		set.add(8);
 		set.add(1);
 		set.add(9);
-		int val = 29;
+		int val = 22;
 		SubSetSum Prob = new SubSetSum(set, val);
 		Prob.risolvi();
 		System.out.println(Arrays.toString(Prob.set));

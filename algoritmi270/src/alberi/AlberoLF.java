@@ -110,6 +110,8 @@ public class AlberoLF<T> implements Albero<T> {
 			throw new AlberiDiversiException();
 		if (figlio(pos)!=null)
 			return false;
+		if (a.padre()!=null) 
+			return false;
 		figli.set(pos, a);
 		a.padre = this;
 		a.posFiglio = pos;
