@@ -1,6 +1,6 @@
 package grafi;
 
-public class ArcoPesato extends Arco {
+public class ArcoPesato extends Arco implements Comparable {
 
 	private double peso;
 	
@@ -19,5 +19,15 @@ public class ArcoPesato extends Arco {
 	public String toString() {
 		return "[Arco pesato (" + in + "," + fin + ","+peso+")]";
 	}
+
+	@Override
+	public int compareTo(Object o) {
+		ArcoPesato a =(ArcoPesato) o;
+		if (a.peso==peso) return 0;
+		else if (a.peso<peso) return 1;
+		return -1;
+	}
+
+
 	
 }

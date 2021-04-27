@@ -131,7 +131,7 @@ public class GrafoMA<A extends Arco> extends Grafo<A> {
 
 		}
 
-		private void avanza() {
+		private void avanza() { //theta(n)
 			for (curfin++; curfin < M[in].length; curfin++)
 				if (M[in][curfin] != null)
 					break;

@@ -110,5 +110,35 @@ public class Ordinamento {
 			return mediano(v, p+1, fin);
 		
 	}
+	
+	
+	public static void countingSort(int[] v) {
+		int min = minimo(v);
+		int max = massimo(v);
+		int[] app =  new int[max- min +1];
+		System.out.println(app.length);
+		for(int i = 0; i<v.length;i++)
+			app[v[i]-min]++;
+		int ins=0;
+		for(int j = 0;j<app.length; j++)
+			while(app[j]>0) {
+				v[ins++]=j+min;
+				app[j]--;
+			}
+	}
+
+	private static int massimo(int[] v) {
+		int max = v[0];
+		for(int i= 0;i<v.length;i++)
+			if(max<v[i]) max = v[i];
+		return max;
+	}
+
+	private static int minimo(int[] v) {
+		int min = v[0];
+		for(int i= 0;i<v.length;i++)
+			if(min>v[i]) min = v[i];
+		return min;
+	}
 
 }

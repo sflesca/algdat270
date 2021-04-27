@@ -2,6 +2,8 @@ package grafi;
 
 import java.util.*;
 
+import unionFind.UnionFind;
+
 /**
  * 
  */
@@ -37,13 +39,13 @@ public abstract class Grafo<A extends Arco> {
 	public abstract Iterator<A> adiacenti(int v); 	//MATRICE: theta(n) 
 													//LISTA: theta(gout(v))
 
-	public abstract void aggiungiArco(A a);// MATRICE: theta(1)
+	public abstract void aggiungiArco(A a);// MATRICE: theta(1) //LISTA media theta(1) peggiore theta(gout(a.in))
 
-	public abstract boolean rimuoviArco(A a);// MATRICE: theta(1)
+	public abstract boolean rimuoviArco(A a);// MATRICE: theta(1) //LISTA media theta(1) peggiore theta(gout(a.in))
 
-	public abstract boolean arco(A a);// MATRICE: theta(1) 
+	public abstract boolean arco(A a);// MATRICE: theta(1) //LISTA media theta(1) peggiore theta(gout(a.in))
 
-	public abstract boolean arco(int v1, int v2);// MATRICE: theta(1)
+	public abstract boolean arco(int v1, int v2);// MATRICE: theta(1) //LISTA media theta(1) peggiore theta(gout(a.in))
 
 
 	// SPAZIALE O(n)
@@ -172,7 +174,7 @@ public abstract class Grafo<A extends Arco> {
 		return -1;
 	}
 
-	public List<Double> prim()
+	public List<Double> prim() // CON HEAP+LA theta(n + m * lg n) con ARRAY theta(n^2)
 	{	int nodoPartenza=0;
 		Double[] distanze=new Double[n];
 		for(int i=0;i<n;i++)
@@ -187,7 +189,11 @@ public abstract class Grafo<A extends Arco> {
 		while(nodoCorrente!=-1)
 		{	raggiunti[nodoCorrente]=true;
 			Iterator<A> adnn=adiacenti(nodoCorrente);
-			while(adnn.hasNext())
+			while(adnn.hasNext())						//MATR theta(n) LISTA: theta(gout(nodocorrente))
+														// CUMULATO theta(n^2) oppure theta(n+m)
+														// CON HEAP - e LA
+														// theta(gout(nodocorrente)*lg n)
+														// cumulativamente theta(n + m * lg n)
 			{	A a=adnn.next();
 				if(!raggiunti[a.getFin()])
 				{	double nuovaDist=pesoArco(a);
@@ -199,7 +205,8 @@ public abstract class Grafo<A extends Arco> {
 			}
 			nodoCorrente=-1;
 			double minPeso=Double.POSITIVE_INFINITY;
-			for(int i=0;i<n;i++)
+			for(int i=0;i<n;i++)						//theta(n) cumulato theta(n^2)
+														// CON REALIZZAZIONE A HEAP theta/lg n) cumulato theta(n lg n)
 				if(!raggiunti[i] && distanze[i]<minPeso)
 				{	nodoCorrente=i;
 					minPeso=distanze[i];
@@ -209,17 +216,17 @@ public abstract class Grafo<A extends Arco> {
 	}
 	
 	public Grafo<ArcoPesato> kruskal(){ // theta( m n) || (union find) theta(m lg n)
-		ArcoPesato[] archi = generaArchiOrdinati(); // theta(m lg n) || theta(n^2 + m lg n)
+		ArrayList<ArcoPesato> archi = generaArchiOrdinati(); // theta(m lg n) || theta(n^2 + m lg n)
 		int inseriti = 0;
 		GrafoLista<ArcoPesato> albero = new GrafoLista<ArcoPesato>(n());
 		// creare union find - theta(n)
 		
 		//theta (m + n lg n)
-		for(int i=0; (i<archi.length)&& (inseriti<n()-1); i++){ // m volte
-			List<Integer> lista = albero.depthFirstSearch(archi[i].getIn()); // theta(n) || theta (n^2)
+		for(int i=0; (i<archi.size())&& (inseriti<n()-1); i++){ // m volte
+			List<Integer> lista = albero.depthFirstSearch(archi.get(i).getIn()); // theta(n) || theta (n^2)
 			// 2 find theta(1)
-			if (!lista.contains(archi[i].getFin())){ // theta(1)
-				albero.aggiungiArco(archi[i]); // theta(1)
+			if (!lista.contains(archi.get(i).getFin())){ // theta(1)
+				albero.aggiungiArco(archi.get(i)); // theta(1)
 				inseriti++; // theta(1)
 				// union degli insiemi che contengono archi[i].getFin()
 				// e archi[i].getIn() - theta(n)
@@ -231,9 +238,35 @@ public abstract class Grafo<A extends Arco> {
 		return null;
 	}
 	
-	private ArcoPesato[] generaArchiOrdinati() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ArcoPesato> kruskalUF(){ //theta(m lg n)
+		ArrayList<ArcoPesato> archi = generaArchiOrdinati(); // theta(m lg n) 
+		int inseriti = 0;
+		UnionFind foresta = new UnionFind(n());
+		// creare union find - theta(n)
+		List<ArcoPesato> risultato = new LinkedList<ArcoPesato>();
+		//theta (m + n lg n)
+		for(int i=0; (i<archi.size())&& (inseriti<n()-1); i++){ // m volte
+			// 2 find theta(1)
+			if (foresta.find(archi.get(i).getIn())!=foresta.find(archi.get(i).getFin())){ // theta(1)
+				foresta.merge(foresta.find(archi.get(i).getIn()),foresta.find(archi.get(i).getFin())); // theta(1)
+				inseriti++; // theta(1)
+				risultato.add(archi.get(i));
+				// union degli insiemi che contengono archi[i].getFin()
+				// e archi[i].getIn() - theta(n)
+				// complessivamente facciamo n-1 union che hanno un costo theta(n lg n)
+			}
+		}
+		if (inseriti==n()-1)
+			return risultato;
+		return risultato;
+	}
+	
+	public ArrayList<ArcoPesato> generaArchiOrdinati() {
+		ArrayList<ArcoPesato> archi = new ArrayList<ArcoPesato>(m());
+		Iterator<A> it = this.archi();
+		while(it.hasNext()) archi.add((ArcoPesato) it.next());
+		Collections.sort(archi);
+		return archi;
 	}
 
 	public double[][] floydWarshall()
